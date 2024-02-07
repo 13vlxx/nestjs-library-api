@@ -9,7 +9,7 @@ import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 @Injectable()
 export class BooksService {
   constructor(
-    @InjectModel(Book.name) private bookModel: mongoose.Model<Book>,
+    @InjectModel(Book.name) private readonly bookModel: mongoose.Model<Book>,
   ) {}
 
   async findAll(query: Query): Promise<Book[]> {

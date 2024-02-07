@@ -5,6 +5,7 @@ export enum Category {
   CLASSICS = 'Classics',
   CRIME = 'Crime',
   FANTASY = 'Fantasy',
+  MANGA = 'Manga',
 }
 
 @Schema({ timestamps: true })

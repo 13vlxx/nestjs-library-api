@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Category } from 'src/books/schemas/book.schema';
 
 export class CreateBookDto {
   @IsString()
@@ -17,7 +18,7 @@ export class CreateBookDto {
   @IsNotEmpty()
   price: number;
 
-  @IsString()
+  @IsEnum(Category, { message: 'Please enter a correct category' })
   @IsNotEmpty()
   category: string;
 }
