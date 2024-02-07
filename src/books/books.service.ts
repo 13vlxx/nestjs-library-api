@@ -5,13 +5,12 @@ import {
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Book, BookDocument } from './schemas/book.schema';
+import { Book, BookDocument } from './book.schema';
 import mongoose from 'mongoose';
 import { Query } from 'express-serve-static-core';
 import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
-import { User, UserDocument } from 'src/users/schemas/user.schema';
-import { title } from 'process';
+import { UserDocument } from 'src/users/user.schema';
 
 @Injectable()
 export class BooksService {
@@ -35,7 +34,8 @@ export class BooksService {
     const books = await this.bookModel
       .find({ ...title })
       .limit(booksPerPage)
-      .skip(skip);
+      .skip(skip)
+      .populate('user');
     return books;
   }
 
@@ -67,7 +67,7 @@ export class BooksService {
     if (!isValid) throw new NotFoundException('Book not found');
     const book = await this.bookModel.findById(id);
     if (!book) throw new NotFoundException('Book not found');
-    if (book.user != user)
+    if (book.user._id.equals(user._id))
       throw new UnauthorizedException('This is not your book');
     return await this.bookModel.findByIdAndDelete(id);
   }

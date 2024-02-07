@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { User } from 'src/users/schemas/user.schema';
+import { User, UserDocument } from 'src/users/user.schema';
+import { Types } from 'mongoose';
 
 export enum Category {
   ADVENTURE = 'Adventure',
@@ -15,23 +16,27 @@ export type BookDocument = HydratedDocument<Book>;
 
 @Schema({ timestamps: true })
 export class Book {
-  @Prop()
+  @Prop({ required: true })
   title: string;
 
-  @Prop()
-  description: string;
+  @Prop({ default: null, required: true })
+  description: string | null;
 
-  @Prop()
+  @Prop({ required: true })
   author: string;
 
-  @Prop()
+  @Prop({ required: true })
   price: number;
 
-  @Prop()
+  @Prop({ required: true })
   category: Category;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
-  user: User;
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User.name,
+    required: true,
+  })
+  user: UserDocument | Types.ObjectId;
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

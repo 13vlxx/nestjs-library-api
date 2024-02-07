@@ -5,8 +5,8 @@ import {
   IsNumber,
   IsString,
 } from 'class-validator';
-import { Category } from 'src/books/schemas/book.schema';
-import { User } from 'src/users/schemas/user.schema';
+import { Category } from 'src/books/book.schema';
+import { User } from 'src/users/user.schema';
 
 export class CreateBookDto {
   @IsString()
