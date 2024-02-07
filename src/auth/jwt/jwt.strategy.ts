@@ -20,7 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload) {
     const { id } = payload;
-    console.log(id);
     const user = await this.userService.returnUserById(id);
     if (!user) {
       throw new UnauthorizedException('Login first to access this endpoint');

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
 
 export enum Category {
@@ -8,7 +8,10 @@ export enum Category {
   CRIME = 'Crime',
   FANTASY = 'Fantasy',
   MANGA = 'Manga',
+  COMICS = 'Comics',
 }
+
+export type BookDocument = HydratedDocument<Book>;
 
 @Schema({ timestamps: true })
 export class Book {

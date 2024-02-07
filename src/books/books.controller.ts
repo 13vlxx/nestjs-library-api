@@ -45,8 +45,9 @@ export class BooksController {
     return this.booksService.updateById(id, updateBookDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id/delete')
-  deleteById(@Param('id') id: string): Promise<Book> {
-    return this.booksService.deleteById(id);
+  deleteById(@Param('id') id: string, @Req() req): Promise<Book> {
+    return this.booksService.deleteById(id, req);
   }
 }
