@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { Query as ExpressQuery } from 'express-serve-static-core';
@@ -32,8 +33,8 @@ export class BooksController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('new')
-  createBook(@Body() createBookDto: CreateBookDto): Promise<Book> {
-    return this.booksService.create(createBookDto);
+  createBook(@Body() createBookDto: CreateBookDto, @Req() req): Promise<Book> {
+    return this.booksService.create(createBookDto, req.user);
   }
 
   @Patch(':id/update')

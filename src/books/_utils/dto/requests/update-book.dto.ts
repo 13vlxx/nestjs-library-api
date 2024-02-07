@@ -1,4 +1,5 @@
 import {
+  IsEmpty,
   IsEnum,
   IsNotEmpty,
   IsNumber,
@@ -6,25 +7,29 @@ import {
   IsString,
 } from 'class-validator';
 import { Category } from 'src/books/schemas/book.schema';
+import { User } from 'src/users/schemas/user.schema';
 
 export class UpdateBookDto {
   @IsString()
   @IsOptional()
-  title?: string;
+  readonly title?: string;
 
   @IsString()
   @IsOptional()
-  description?: string;
+  readonly description?: string;
 
   @IsString()
   @IsOptional()
-  author?: string;
+  readonly author?: string;
 
   @IsNumber()
   @IsOptional()
-  price?: number;
+  readonly price?: number;
 
   @IsEnum(Category, { message: 'Please enter a correct category' })
   @IsOptional()
-  category?: string;
+  readonly category?: string;
+
+  @IsEmpty({ message: 'You cannot pass user id' })
+  readonly user: User;
 }
