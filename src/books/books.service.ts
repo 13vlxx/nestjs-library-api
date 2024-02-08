@@ -12,15 +12,17 @@ import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { UserDocument } from 'src/users/user.schema';
 import { BooksRepository } from './books.repository';
+import { BooksMapper } from './books.mapper';
 
 @Injectable()
 export class BooksService {
   constructor(
     @InjectModel(Book.name) private readonly bookModel: mongoose.Model<Book>,
     private readonly booksRepository: BooksRepository,
+    private readonly booksMapper: BooksMapper,
   ) {}
 
-  async findAll(query: Query): Promise<Book[]> {
+  async findAll(query: Query) {
     const booksPerPage = 2;
     const currentPage = Number(query.page) || 1;
     const skip = booksPerPage * (currentPage - 1);
@@ -33,8 +35,12 @@ export class BooksService {
         }
       : {};
 
-    const books = await this.booksRepository.findAll(title, booksPerPage, skip);
-    return books;
+    const books: BookDocument[] = await this.booksRepository.findAll(
+      title,
+      booksPerPage,
+      skip,
+    );
+    return this.booksMapper.toGetBooksDto(books);
   }
 
   async create(createBookDto: CreateBookDto, user: UserDocument) {

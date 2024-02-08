@@ -22,7 +22,7 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Get()
-  getAllBooks(@Query() query: ExpressQuery): Promise<Book[]> {
+  getAllBooks(@Query() query: ExpressQuery) {
     return this.booksService.findAll(query);
   }
 
