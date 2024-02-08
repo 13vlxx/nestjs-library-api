@@ -16,9 +16,10 @@ import { Query as ExpressQuery } from 'express-serve-static-core';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
-import { Book } from './book.schema';
+import { Book, BookDocument } from './book.schema';
 import { AuthGuard } from '@nestjs/passport';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { GetBooksDto } from './_utils/dto/responses/get-books.dto';
 
 @Controller('books')
 export class BooksController {
@@ -26,7 +27,7 @@ export class BooksController {
 
   @Get()
   @Header('Access-Control-Allow-Origin', '*')
-  getAllBooks(@Query() query: ExpressQuery) {
+  getAllBooks(@Query() query: ExpressQuery): Promise<GetBooksDto[]> {
     return this.booksService.findAll(query);
   }
 
@@ -41,6 +42,7 @@ export class BooksController {
     return this.booksService.create(createBookDto, req.user);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id/update')
   updateById(
     @Param('id') id: string,
@@ -51,7 +53,7 @@ export class BooksController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id/delete')
-  deleteById(@Param('id') id: string, @Req() req) {
+  deleteById(@Param('id') id: string, @Req() req): Promise<BookDocument> {
     return this.booksService.deleteById(id, req.user);
   }
 }

@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
+import { GetUploadConfirmationDto } from './_utils/dto/responses/get-upload-confirmation.dto';
 
 @Controller('upload')
 export class UploadController {
@@ -26,7 +27,7 @@ export class UploadController {
       }),
     )
     file: Express.Multer.File,
-  ) {
+  ): GetUploadConfirmationDto {
     return this.uploadService.uploadFile(file);
   }
 }
