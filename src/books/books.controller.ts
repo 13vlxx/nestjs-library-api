@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
   Param,
   Patch,
   Post,
@@ -24,8 +25,7 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Get()
-  // @CacheTTL(300000)
-  // @UseInterceptors(CacheInterceptor)
+  @Header('Access-Control-Allow-Origin', '*')
   getAllBooks(@Query() query: ExpressQuery) {
     return this.booksService.findAll(query);
   }
