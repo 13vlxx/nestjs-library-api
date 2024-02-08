@@ -19,7 +19,7 @@ export class AuthService {
   async login(loginUserDto: LoginUserDto) {
     const user = await this.usersService.loginUser(loginUserDto);
     const token = this.jwtService.sign({
-      id: user._id,
+      id: user.id,
     });
     return {
       user,

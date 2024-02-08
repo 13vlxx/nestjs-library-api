@@ -8,17 +8,26 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './_utils/dto/requests/create-user.dto';
 import { LoginUserDto } from './_utils/dto/requests/login-user.dto';
 import { UsersRepository } from './users.repository';
+import { UsersMapper } from './users.mapper';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly usersMapper: UsersMapper,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto) {
     const { name, email, password } = createUserDto;
     const isUserExisting = await this.usersRepository.findUserByEmail(email);
     if (isUserExisting) throw new ConflictException('User already exists');
     const hashedPassword = await bcrypt.hash(password, 10);
-    return await this.usersRepository.register(name, email, hashedPassword);
+    const user = await this.usersRepository.register(
+      name,
+      email,
+      hashedPassword,
+    );
+    return this.usersMapper.toGetUserDto(user);
   }
 
   async loginUser(loginUserDto: LoginUserDto) {
@@ -28,7 +37,7 @@ export class UsersService {
     const arePasswordMatching = await bcrypt.compare(password, user.password);
     if (!arePasswordMatching)
       throw new UnauthorizedException('Incorrect email or password');
-    return user;
+    return this.usersMapper.toGetUserDto(user);
   }
 
   async returnUserById(id: string) {

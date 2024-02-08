@@ -11,15 +11,17 @@ import { Query } from 'express-serve-static-core';
 import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { UserDocument } from 'src/users/user.schema';
+import { BooksRepository } from './books.repository';
 
 @Injectable()
 export class BooksService {
   constructor(
     @InjectModel(Book.name) private readonly bookModel: mongoose.Model<Book>,
+    private readonly booksRepository: BooksRepository,
   ) {}
 
   async findAll(query: Query): Promise<Book[]> {
-    const booksPerPage = 10;
+    const booksPerPage = 2;
     const currentPage = Number(query.page) || 1;
     const skip = booksPerPage * (currentPage - 1);
     const title = query.title
@@ -31,24 +33,18 @@ export class BooksService {
         }
       : {};
 
-    const books = await this.bookModel
-      .find({ ...title })
-      .limit(booksPerPage)
-      .skip(skip)
-      .populate('user');
+    const books = await this.booksRepository.findAll(title, booksPerPage, skip);
     return books;
   }
 
   async create(createBookDto: CreateBookDto, user: UserDocument) {
-    const data = Object.assign(createBookDto, { user: user._id });
-    const book = await this.bookModel.create(data);
-    return book;
+    return this.booksRepository.create(createBookDto, user._id);
   }
 
   async findById(id: string) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
     if (!isValid) throw new NotFoundException('Book not found');
-    const book = await this.bookModel.findById(id);
+    const book = await this.booksRepository.findById(id);
     if (!book) throw new NotFoundException('Book not found');
     return book;
   }
@@ -56,16 +52,13 @@ export class BooksService {
   async updateById(id: string, updateBookDto: UpdateBookDto) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
     if (!isValid) throw new NotFoundException('Book not found');
-    return await this.bookModel.findByIdAndUpdate(id, updateBookDto, {
-      new: true,
-      runValidators: true,
-    });
+    return await this.booksRepository.findByIdAndUpdate(id, updateBookDto);
   }
 
   async deleteById(id: string, user: UserDocument) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
     if (!isValid) throw new NotFoundException('Book not found');
-    const book = await this.bookModel.findById(id);
+    const book = await this.booksRepository.findById(id);
     if (!book) throw new NotFoundException('Book not found');
     if (book.user._id.equals(user._id))
       throw new UnauthorizedException('This is not your book');
