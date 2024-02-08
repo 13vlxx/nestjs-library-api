@@ -48,8 +48,6 @@ export class BooksService {
       booksPerPage,
       skip,
     );
-    // this.cacheManager.set('cachedBooks', books, 3000);
-    console.log('from mongo');
     return this.booksMapper.toGetBooksDto(books);
   }
 
