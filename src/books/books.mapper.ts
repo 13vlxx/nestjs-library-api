@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Book, BookDocument } from './book.schema';
 import { UsersMapper } from 'src/users/users.mapper';
-import { GetBookDto } from './_utils/dto/responses/get-books.dto';
+import { GetBookDto } from './_utils/dto/responses/get-book.dto';
 import { Types } from 'mongoose';
 @Injectable()
 export class BooksMapper {

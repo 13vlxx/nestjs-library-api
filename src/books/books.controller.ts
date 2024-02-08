@@ -19,7 +19,7 @@ import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { Book, BookDocument } from './book.schema';
 import { AuthGuard } from '@nestjs/passport';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-import { GetBookDto } from './_utils/dto/responses/get-books.dto';
+import { GetBookDto } from './_utils/dto/responses/get-book.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Books')
