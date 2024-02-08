@@ -19,8 +19,6 @@ export class UsersService {
 
   async createUser(createUserDto: CreateUserDto) {
     const { name, email, password } = createUserDto;
-    const isUserExisting = await this.usersRepository.findUserByEmail(email);
-    if (isUserExisting) throw new ConflictException('User already exists');
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await this.usersRepository.register(
       name,
