@@ -9,6 +9,7 @@ import {
   Query,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 import { BooksService } from './books.service';
@@ -16,12 +17,15 @@ import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { Book } from './book.schema';
 import { AuthGuard } from '@nestjs/passport';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Get()
+  // @CacheTTL(300000)
+  // @UseInterceptors(CacheInterceptor)
   getAllBooks(@Query() query: ExpressQuery) {
     return this.booksService.findAll(query);
   }

@@ -1,9 +1,9 @@
 import {
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Book, BookDocument } from './book.schema';
 import mongoose from 'mongoose';
@@ -13,6 +13,8 @@ import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { UserDocument } from 'src/users/user.schema';
 import { BooksRepository } from './books.repository';
 import { BooksMapper } from './books.mapper';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class BooksService {
@@ -20,9 +22,15 @@ export class BooksService {
     @InjectModel(Book.name) private readonly bookModel: mongoose.Model<Book>,
     private readonly booksRepository: BooksRepository,
     private readonly booksMapper: BooksMapper,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async findAll(query: Query) {
+    // const cachedBooks = await this.cacheManager.get('cachedBooks');
+    // if (cachedBooks) {
+    //   return 'ok';
+    // }
+
     const booksPerPage = 2;
     const currentPage = Number(query.page) || 1;
     const skip = booksPerPage * (currentPage - 1);
@@ -40,6 +48,8 @@ export class BooksService {
       booksPerPage,
       skip,
     );
+    // this.cacheManager.set('cachedBooks', books, 3000);
+    console.log('from mongo');
     return this.booksMapper.toGetBooksDto(books);
   }
 

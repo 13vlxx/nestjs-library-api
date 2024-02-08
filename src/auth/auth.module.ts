@@ -5,7 +5,6 @@ import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { config } from 'process';
 import { JwtStrategy } from './jwt/jwt.strategy';
 
 @Module({
