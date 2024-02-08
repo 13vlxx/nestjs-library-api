@@ -10,7 +10,7 @@ export class UploadService {
 
   uploadFile(file: Express.Multer.File): GetUploadConfirmationDto {
     const extension = path.extname(file.originalname);
-    const uploadFolder = `./src/upload/uploaded_files/${extension.slice(1)}`;
+    const uploadFolder = `./upload/uploaded_files/${extension.slice(1)}`;
 
     if (!fs.existsSync(uploadFolder)) {
       fs.mkdirSync(uploadFolder, { recursive: true });

@@ -8,19 +8,9 @@ import { Types } from 'mongoose';
 export class UsersMapper {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  toFindAndGetUserDto = async (
-    userId: string | Types.ObjectId,
-  ): Promise<GetUserDto> => {
-    const user = await this.usersRepository.findUserById(userId);
-
-    return this.toGetUserDto(user);
-  };
-
-  toGetUserDto = (user: UserDocument): GetUserDto => {
-    return {
-      id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-    };
-  };
+  toGetUserDto = (user: UserDocument): GetUserDto => ({
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+  });
 }
