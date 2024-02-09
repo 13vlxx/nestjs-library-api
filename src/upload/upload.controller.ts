@@ -9,13 +9,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
-import { GetUploadConfirmationDto } from './_utils/dto/responses/get-upload-confirmation.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { FormDataRequest } from 'nestjs-form-data';
 import { FormDataBookPictureDto } from './_utils/dto/requests/form-data-book-picture.dto';
+import { FormDataMultipleFilesDto } from './_utils/dto/requests/form-data-multiple-files.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
@@ -53,7 +52,7 @@ export class UploadController {
   @Post('multiple')
   @ApiOperation({ summary: 'Upload multiple files' })
   @FormDataRequest()
-  uploadFiles() {
-    return this.uploadService.uploadFiles();
+  uploadFiles(@Body() formDataMultipleFilesDto: FormDataMultipleFilesDto) {
+    return this.uploadService.uploadFiles(formDataMultipleFilesDto);
   }
 }

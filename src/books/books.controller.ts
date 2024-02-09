@@ -18,7 +18,6 @@ import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { Book, BookDocument } from './book.schema';
 import { AuthGuard } from '@nestjs/passport';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { GetBookDto } from './_utils/dto/responses/get-book.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -34,8 +33,8 @@ export class BooksController {
     return this.booksService.findAll(query);
   }
 
-  @CacheTTL(300)
-  @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(300)
+  // @UseInterceptors(CacheInterceptor)
   @Get(':id')
   @ApiOperation({ summary: 'Fetch book by id' })
   getBookById(@Param('id') id: string): Promise<Book> {

@@ -13,8 +13,6 @@ import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { UserDocument } from 'src/users/user.schema';
 import { BooksRepository } from './books.repository';
 import { BooksMapper } from './books.mapper';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
 
 @Injectable()
 export class BooksService {
@@ -22,7 +20,6 @@ export class BooksService {
     @InjectModel(Book.name) private readonly bookModel: mongoose.Model<Book>,
     private readonly booksRepository: BooksRepository,
     private readonly booksMapper: BooksMapper,
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async findAll(query: Query) {

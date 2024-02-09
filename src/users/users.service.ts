@@ -11,11 +11,13 @@ import { UsersRepository } from './users.repository';
 import { UsersMapper } from './users.mapper';
 import { UserDocument } from './user.schema';
 import { GetUserDto } from './_utils/dto/responses/get-user.dto';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly usersRepository: UsersRepository,
+    private readonly emailService: EmailService,
     private readonly usersMapper: UsersMapper,
   ) {}
 
@@ -27,6 +29,13 @@ export class UsersService {
       email,
       hashedPassword,
     );
+
+    this.emailService.sendRegistrationConfirmationEmail({
+      toEmail: email,
+      subject: 'Welcome to our library !',
+      content: `Hello ${name}`,
+    });
+
     return this.usersMapper.toGetUserDto(user);
   }
 

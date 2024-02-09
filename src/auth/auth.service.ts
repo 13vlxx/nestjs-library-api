@@ -1,7 +1,5 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Cache } from 'cache-manager';
 import { CreateUserDto } from 'src/users/_utils/dto/requests/create-user.dto';
 import { LoginUserDto } from 'src/users/_utils/dto/requests/login-user.dto';
 import { UsersService } from 'src/users/users.service';
