@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { UploadModule } from './upload/upload.module';
+import { MemoryStoredFile, NestjsFormDataModule } from 'nestjs-form-data';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UploadModule } from './upload/upload.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
+    NestjsFormDataModule.config({ isGlobal: true, storage: MemoryStoredFile }),
     MongooseModule.forRoot(process.env.DATABASE_URL),
     AuthModule,
     BooksModule,
