@@ -71,7 +71,7 @@ export class BooksService {
     if (!isValid) throw new NotFoundException('Book not found');
     const book = await this.booksRepository.findById(id);
     if (!book) throw new NotFoundException('Book not found');
-    if (book.user._id.equals(user._id))
+    if (!book.user._id.equals(user._id))
       throw new UnauthorizedException('This is not your book');
     return await this.bookModel.findByIdAndDelete(id);
   }

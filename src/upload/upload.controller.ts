@@ -15,9 +15,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { FormDataRequest } from 'nestjs-form-data';
 import { FormDataBookPictureDto } from './_utils/dto/requests/form-data-book-picture.dto';
 import { FormDataMultipleFilesDto } from './_utils/dto/requests/form-data-multiple-files.dto';
+import { Protect } from 'src/auth/_utils/decorators/protect.decorator';
 
-@UseGuards(AuthGuard('jwt'))
-@ApiBearerAuth()
+@Protect()
 @ApiTags('Uploads')
 @Controller('upload')
 export class UploadController {

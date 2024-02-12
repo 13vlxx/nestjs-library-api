@@ -55,10 +55,9 @@ export class BooksController {
     return this.booksService.create(createBookDto, user);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @Protect()
   @Patch(':id/update')
   @ApiOperation({ summary: 'Update a book by id' })
-  @ApiBearerAuth()
   updateById(
     @Param('id') id: string,
     @Body() updateBookDto: UpdateBookDto,
@@ -66,11 +65,13 @@ export class BooksController {
     return this.booksService.updateById(id, updateBookDto);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @Protect()
   @Delete(':id/delete')
   @ApiOperation({ summary: 'Delete a book by id' })
-  @ApiBearerAuth()
-  deleteById(@Param('id') id: string, @Req() req): Promise<BookDocument> {
-    return this.booksService.deleteById(id, req.user);
+  deleteById(
+    @Param('id') id: string,
+    @ConnectedUser() user: UserDocument,
+  ): Promise<BookDocument> {
+    return this.booksService.deleteById(id, user);
   }
 }

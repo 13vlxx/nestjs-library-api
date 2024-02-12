@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { SolidPasswordDecorator } from 'src/auth/_utils/decorators/solid-password.decorator';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -9,7 +10,7 @@ export class CreateUserDto {
   @IsEmail()
   readonly email: string;
 
-  @IsNotEmpty()
   @IsString()
+  @SolidPasswordDecorator()
   readonly password: string;
 }
