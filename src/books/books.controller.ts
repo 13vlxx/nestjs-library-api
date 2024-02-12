@@ -20,6 +20,8 @@ import { Book, BookDocument } from './book.schema';
 import { AuthGuard } from '@nestjs/passport';
 import { GetBookDto } from './_utils/dto/responses/get-book.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
+import { Protect } from 'src/auth/_utils/decorators/protect.decorator';
 
 @ApiTags('Books')
 @Controller('books')
@@ -41,10 +43,9 @@ export class BooksController {
     return this.booksService.findById(id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @Protect()
   @Post('new')
   @ApiOperation({ summary: 'Create a new book' })
-  @ApiBearerAuth()
   createBook(@Body() createBookDto: CreateBookDto, @Req() req): Promise<Book> {
     return this.booksService.create(createBookDto, req.user);
   }
