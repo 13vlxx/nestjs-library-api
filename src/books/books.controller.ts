@@ -22,6 +22,8 @@ import { GetBookDto } from './_utils/dto/responses/get-book.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { Protect } from 'src/auth/_utils/decorators/protect.decorator';
+import { ConnectedUser } from 'src/auth/_utils/decorators/connected-user.decorator';
+import { UserDocument } from 'src/users/user.schema';
 
 @ApiTags('Books')
 @Controller('books')
@@ -46,8 +48,11 @@ export class BooksController {
   @Protect()
   @Post('new')
   @ApiOperation({ summary: 'Create a new book' })
-  createBook(@Body() createBookDto: CreateBookDto, @Req() req): Promise<Book> {
-    return this.booksService.create(createBookDto, req.user);
+  createBook(
+    @Body() createBookDto: CreateBookDto,
+    @ConnectedUser() user: UserDocument,
+  ): Promise<Book> {
+    return this.booksService.create(createBookDto, user);
   }
 
   @UseGuards(AuthGuard('jwt'))

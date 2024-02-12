@@ -5,6 +5,8 @@ import { LoginUserDto } from 'src/users/_utils/dto/requests/login-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { GetLoggedUserDto } from './_utils/dto/responses/get-logged-user.dto';
 import { GetUserDto } from 'src/users/_utils/dto/responses/get-user.dto';
+import { UserDocument } from 'src/users/user.schema';
+import { JwtPayload } from './jwt/jwt.payload';
 
 @Injectable()
 export class AuthService {
@@ -19,12 +21,17 @@ export class AuthService {
 
   async login(loginUserDto: LoginUserDto): Promise<GetLoggedUserDto> {
     const user = await this.usersService.loginUser(loginUserDto);
-    const token = this.jwtService.sign({
-      id: user.id,
-    });
     return {
       user,
-      token,
+      token: this.createToken(user),
     };
+  }
+
+  private createToken(user: GetUserDto) {
+    const payload: JwtPayload = {
+      id: user.id,
+    };
+
+    return this.jwtService.sign(payload);
   }
 }
