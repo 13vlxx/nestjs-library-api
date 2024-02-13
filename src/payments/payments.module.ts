@@ -4,6 +4,8 @@ import { PaymentsService } from './payments.service';
 import { StripeModule } from '@golevelup/nestjs-stripe';
 import { ConfigService } from '@nestjs/config';
 import { CustomersService } from './services/customers.service';
+import { StripeService } from './services/stripe.service';
+import { SubscriptionService } from './services/subscriptions.service';
 
 @Module({
   imports: [
@@ -21,7 +23,12 @@ import { CustomersService } from './services/customers.service';
     }),
   ],
   controllers: [PaymentsController],
-  providers: [PaymentsService, CustomersService],
+  providers: [
+    PaymentsService,
+    CustomersService,
+    StripeService,
+    SubscriptionService,
+  ],
   exports: [PaymentsService, CustomersService],
 })
 export class PaymentsModule {}
