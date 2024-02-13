@@ -7,16 +7,23 @@ import { GetLoggedUserDto } from './_utils/dto/responses/get-logged-user.dto';
 import { GetUserDto } from 'src/users/_utils/dto/responses/get-user.dto';
 import { UserDocument } from 'src/users/user.schema';
 import { JwtPayload } from './jwt/jwt.payload';
+import { CustomersService } from 'src/payments/services/customers.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
+    private readonly customersService: CustomersService,
     private readonly jwtService: JwtService,
   ) {}
 
   async register(createUserDto: CreateUserDto): Promise<GetUserDto> {
-    return await this.usersService.createUser(createUserDto);
+    const user = await this.usersService.createUser(createUserDto);
+    const stripeCustomer =
+      await this.customersService.registerCustomer(createUserDto);
+    await this.usersService.addCustomerId(user.id, stripeCustomer.id);
+
+    return user;
   }
 
   async login(loginUserDto: LoginUserDto): Promise<GetLoggedUserDto> {

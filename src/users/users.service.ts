@@ -21,13 +21,17 @@ export class UsersService {
     private readonly usersMapper: UsersMapper,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<GetUserDto> {
+  async createUser(
+    createUserDto: CreateUserDto,
+    stripeId?: string,
+  ): Promise<GetUserDto> {
     const { name, email, password } = createUserDto;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await this.usersRepository.register(
       name,
       email,
       hashedPassword,
+      (stripeId = null),
     );
 
     this.emailService.sendRegistrationConfirmationEmail({
@@ -51,5 +55,9 @@ export class UsersService {
 
   async returnUserById(id: string): Promise<UserDocument> {
     return this.usersRepository.findUserById(id);
+  }
+
+  async addCustomerId(userId: string, stripeId: string) {
+    return await this.usersRepository.findUserByIdAndUpdate(userId, stripeId);
   }
 }

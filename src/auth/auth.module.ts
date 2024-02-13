@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import { JwtAuthGuard } from './jwt/jwt-auth.guard';
+import { PaymentsModule } from 'src/payments/payments.module';
 
 @Module({
   controllers: [AuthController],
@@ -25,6 +26,7 @@ import { JwtAuthGuard } from './jwt/jwt-auth.guard';
       },
     }),
     UsersModule,
+    PaymentsModule,
   ],
   exports: [],
 })
