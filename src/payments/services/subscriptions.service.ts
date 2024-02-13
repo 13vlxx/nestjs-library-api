@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateSessionDto } from '../_utils/dto/requests/create-session.dto';
 import { UserDocument } from 'src/users/user.schema';
 import { ConfigService } from '@nestjs/config';
 import { InjectStripeClient } from '@golevelup/nestjs-stripe';
 import Stripe from 'stripe';
+import { CancelSubscriptionDto } from '../_utils/dto/requests/cancel-subscription.dto';
 
 @Injectable()
 export class SubscriptionService {
@@ -30,5 +31,12 @@ export class SubscriptionService {
     });
 
     return session.url;
+  }
+
+  async cancelSubscription(
+    cancelSubscriptionDto: CancelSubscriptionDto,
+    user: UserDocument,
+  ) {
+    return user;
   }
 }

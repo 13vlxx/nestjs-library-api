@@ -26,4 +26,6 @@ export class UsersRepository {
       password: password,
       stripeCustomerId: stripeId,
     });
+
+  delete = (userId: string) => this.model.findByIdAndDelete(userId).exec();
 }

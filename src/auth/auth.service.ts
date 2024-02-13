@@ -34,6 +34,15 @@ export class AuthService {
     };
   }
 
+  async deleteAccount(user: UserDocument) {
+    await this.customersService.deleteCustomer(user.stripeCustomerId);
+    await this.usersService.deleteUser(user._id.toString());
+    return {
+      status: 'ok',
+      message: 'user deleted successfully',
+    };
+  }
+
   private createToken(user: GetUserDto) {
     const payload: JwtPayload = {
       id: user.id,

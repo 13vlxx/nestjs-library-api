@@ -54,7 +54,11 @@ export class UsersService {
   }
 
   async returnUserById(id: string): Promise<UserDocument> {
-    return this.usersRepository.findUserById(id);
+    return await this.usersRepository.findUserById(id);
+  }
+
+  async deleteUser(userId: string) {
+    return await this.usersRepository.delete(userId);
   }
 
   async addCustomerId(userId: string, stripeId: string) {
