@@ -6,6 +6,7 @@ export class GetBookDto {
   id: string | Types.ObjectId;
   title: string;
   description: string;
+  imageUrl: string;
   price: number;
   category: Category;
   user: GetUserDto;

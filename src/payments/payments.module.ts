@@ -6,6 +6,8 @@ import { ConfigService } from '@nestjs/config';
 import { CustomersService } from './services/customers.service';
 import { StripeService } from './services/stripe.service';
 import { SubscriptionService } from './services/subscriptions.service';
+import { WebHooksService } from './services/web-hooks.service';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
@@ -21,6 +23,7 @@ import { SubscriptionService } from './services/subscriptions.service';
       }),
       inject: [ConfigService],
     }),
+    UsersModule,
   ],
   controllers: [PaymentsController],
   providers: [
@@ -28,6 +31,7 @@ import { SubscriptionService } from './services/subscriptions.service';
     CustomersService,
     StripeService,
     SubscriptionService,
+    WebHooksService,
   ],
   exports: [PaymentsService, CustomersService],
 })

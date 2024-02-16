@@ -23,6 +23,9 @@ export class Book {
   description: string | null;
 
   @Prop({ required: true })
+  imageUrl: string;
+
+  @Prop({ required: true })
   author: string;
 
   @Prop({ required: true })

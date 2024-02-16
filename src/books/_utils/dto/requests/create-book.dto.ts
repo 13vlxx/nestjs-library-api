@@ -19,6 +19,10 @@ export class CreateBookDto {
 
   @IsString()
   @IsNotEmpty()
+  readonly imageUrl: string;
+
+  @IsString()
+  @IsNotEmpty()
   readonly author: string;
 
   @IsNumber()

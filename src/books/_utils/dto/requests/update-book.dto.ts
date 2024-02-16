@@ -20,6 +20,10 @@ export class UpdateBookDto {
 
   @IsString()
   @IsOptional()
+  readonly imageUrl?: string;
+
+  @IsString()
+  @IsOptional()
   readonly author?: string;
 
   @IsNumber()

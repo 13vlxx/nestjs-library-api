@@ -28,7 +28,7 @@ export class BooksService {
     //   return 'ok';
     // }
 
-    const booksPerPage = 2;
+    const booksPerPage = 10;
     const currentPage = Number(query.page) || 1;
     const skip = booksPerPage * (currentPage - 1);
     const title = query.title

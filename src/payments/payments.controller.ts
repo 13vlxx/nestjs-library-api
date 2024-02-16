@@ -6,18 +6,25 @@ import { ConnectedUser } from 'src/auth/_utils/decorators/connected-user.decorat
 import { UserDocument } from 'src/users/user.schema';
 import { SubscriptionService } from './services/subscriptions.service';
 import { CancelSubscriptionDto } from './_utils/dto/requests/cancel-subscription.dto';
+import { WebHooksService } from './services/web-hooks.service';
 
 @Controller('payments')
 export class PaymentsController {
   constructor(
     private readonly stripeService: StripeService,
     private readonly subscriptionService: SubscriptionService,
+    private readonly webHookService: WebHooksService,
   ) {}
 
   @Protect()
   @Get('products')
   getAllProducts() {
     return this.stripeService.findAllActiveProducts();
+  }
+
+  @Post()
+  async handleStripeWebHook(@Body() payload: any) {
+    await this.webHookService.handleEvent(payload);
   }
 
   @Protect()

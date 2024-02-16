@@ -41,7 +41,7 @@ export class BooksController {
   // @UseInterceptors(CacheInterceptor)
   @Get(':id')
   @ApiOperation({ summary: 'Fetch book by id' })
-  getBookById(@Param('id') id: string): Promise<Book> {
+  getBookById(@Param('id') id: string): Promise<BookDocument> {
     return this.booksService.findById(id);
   }
 
