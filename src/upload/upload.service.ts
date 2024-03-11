@@ -5,7 +5,6 @@ import * as path from 'path';
 import { GetUploadConfirmationDto } from './_utils/dto/responses/get-upload-confirmation.dto';
 import { FormDataBookPictureDto } from './_utils/dto/requests/form-data-book-picture.dto';
 import { FormDataMultipleFilesDto } from './_utils/dto/requests/form-data-multiple-files.dto';
-import { GetUserDto } from 'src/users/_utils/dto/responses/get-user.dto';
 
 @Injectable()
 export class UploadService {

@@ -1,9 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Book, BookDocument } from './book.schema';
+import { BookDocument } from './book.schema';
 import { UsersMapper } from 'src/users/users.mapper';
 import { GetBookDto } from './_utils/dto/responses/get-book.dto';
 import { Types } from 'mongoose';
-import { Type } from 'class-transformer';
 @Injectable()
 export class BooksMapper {
   constructor(private readonly usersMapper: UsersMapper) {}

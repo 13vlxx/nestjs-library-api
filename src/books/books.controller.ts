@@ -8,19 +8,14 @@ import {
   Patch,
   Post,
   Query,
-  Req,
-  UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
 import { Book, BookDocument } from './book.schema';
-import { AuthGuard } from '@nestjs/passport';
 import { GetBookDto } from './_utils/dto/responses/get-book.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Protect } from 'src/auth/_utils/decorators/protect.decorator';
 import { ConnectedUser } from 'src/auth/_utils/decorators/connected-user.decorator';
 import { UserDocument } from 'src/users/user.schema';
