@@ -3,14 +3,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { BookDocument } from './book.schema';
-import mongoose from 'mongoose';
 import { Query } from 'express-serve-static-core';
+import mongoose from 'mongoose';
+import { UserDocument } from 'src/users/user.schema';
 import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
 import { UpdateBookDto } from './_utils/dto/requests/update-book.dto';
-import { UserDocument } from 'src/users/user.schema';
-import { BooksRepository } from './books.repository';
+import { BookDocument } from './book.schema';
 import { BooksMapper } from './books.mapper';
+import { BooksRepository } from './books.repository';
 
 @Injectable()
 export class BooksService {
@@ -20,11 +20,6 @@ export class BooksService {
   ) {}
 
   async findAll(query: Query) {
-    // const cachedBooks = await this.cacheManager.get('cachedBooks');
-    // if (cachedBooks) {
-    //   return 'ok';
-    // }
-
     const booksPerPage = 10;
     const currentPage = Number(query.page) || 1;
     const skip = booksPerPage * (currentPage - 1);

@@ -1,7 +1,7 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
 import { User } from './user.schema';
-import { Model, ObjectId, Types } from 'mongoose';
 
 @Injectable()
 export class UsersRepository {
