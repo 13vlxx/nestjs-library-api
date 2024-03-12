@@ -1,5 +1,5 @@
 import { InjectStripeClient } from '@golevelup/nestjs-stripe';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/_utils/dto/requests/create-user.dto';
 import { UserDocument } from 'src/users/user.schema';
 import Stripe from 'stripe';
