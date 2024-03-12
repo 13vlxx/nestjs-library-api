@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   async deleteAccount(user: UserDocument) {
-    await this.customersService.deleteCustomer(user.stripeCustomerId);
+    this.customersService.deleteCustomer(user.stripeCustomerId);
     await this.usersService.deleteUser(user._id.toString());
     return {
       status: 'ok',

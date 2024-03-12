@@ -1,7 +1,6 @@
 import {
   HasMimeType,
   IsFile,
-  IsFiles,
   MaxFileSize,
   MemoryStoredFile,
 } from 'nestjs-form-data';

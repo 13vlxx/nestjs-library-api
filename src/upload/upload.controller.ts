@@ -1,17 +1,6 @@
-import {
-  Body,
-  Controller,
-  FileTypeValidator,
-  MaxFileSizeValidator,
-  ParseFilePipe,
-  Post,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { UploadService } from './upload.service';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FormDataRequest } from 'nestjs-form-data';
 import { FormDataBookPictureDto } from './_utils/dto/requests/form-data-book-picture.dto';
 import { FormDataMultipleFilesDto } from './_utils/dto/requests/form-data-multiple-files.dto';

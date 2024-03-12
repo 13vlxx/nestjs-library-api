@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -31,7 +30,7 @@ export class UsersService {
       name,
       email,
       hashedPassword,
-      (stripeId = null),
+      stripeId,
     );
 
     this.emailService.sendRegistrationConfirmationEmail({
