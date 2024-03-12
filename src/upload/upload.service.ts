@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs';
 import * as path from 'path';
-import { GetUploadConfirmationDto } from './_utils/dto/responses/get-upload-confirmation.dto';
 import { FormDataBookPictureDto } from './_utils/dto/requests/form-data-book-picture.dto';
 import { FormDataMultipleFilesDto } from './_utils/dto/requests/form-data-multiple-files.dto';
+import { GetUploadConfirmationDto } from './_utils/dto/responses/get-upload-confirmation.dto';
 
 @Injectable()
 export class UploadService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor() {}
 
   uploadFile(file: FormDataBookPictureDto): GetUploadConfirmationDto {
     const extension = path.extname(file.image.originalName);

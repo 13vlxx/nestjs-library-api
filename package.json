@@ -13,11 +13,11 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "_test": "jest",
+    "_test:watch": "jest --watch",
+    "_test:cov": "jest --coverage",
+    "_test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "_test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.509.0",
@@ -36,6 +36,7 @@
     "cache-manager": "^5.4.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "cypress": "^13.6.6",
     "mongoose": "^8.1.1",
     "nestjs-form-data": "^1.9.5",
     "nodemailer": "^6.9.9",
