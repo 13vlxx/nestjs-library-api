@@ -3,8 +3,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Book, BookDocument } from './book.schema';
+import { BookDocument } from './book.schema';
 import mongoose from 'mongoose';
 import { Query } from 'express-serve-static-core';
 import { CreateBookDto } from './_utils/dto/requests/create-book.dto';
@@ -16,7 +15,6 @@ import { BooksMapper } from './books.mapper';
 @Injectable()
 export class BooksService {
   constructor(
-    @InjectModel(Book.name) private readonly bookModel: mongoose.Model<Book>,
     private readonly booksRepository: BooksRepository,
     private readonly booksMapper: BooksMapper,
   ) {}
@@ -72,6 +70,6 @@ export class BooksService {
     if (!book) throw new NotFoundException('Book not found');
     if (!book.user._id.equals(user._id))
       throw new UnauthorizedException('This is not your book');
-    return await this.bookModel.findByIdAndDelete(id);
+    return await this.booksRepository.findByIdAndDelete(id);
   }
 }

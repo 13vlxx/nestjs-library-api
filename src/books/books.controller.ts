@@ -18,7 +18,7 @@ import { GetBookDto } from './_utils/dto/responses/get-book.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Protect } from 'src/auth/_utils/decorators/protect.decorator';
 import { ConnectedUser } from 'src/auth/_utils/decorators/connected-user.decorator';
-import { UserDocument } from 'src/users/user.schema';
+import { UserDocument } from '@users/user.schema';
 
 @ApiTags('Books')
 @Controller('books')
