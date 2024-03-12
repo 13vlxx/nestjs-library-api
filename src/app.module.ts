@@ -1,14 +1,13 @@
+import { StripeModule } from '@golevelup/nestjs-stripe';
 import { Module } from '@nestjs/common';
-import { BooksModule } from './books/books.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
-import { UploadModule } from './upload/upload.module';
 import { MemoryStoredFile, NestjsFormDataModule } from 'nestjs-form-data';
+import { AuthModule } from './auth/auth.module';
+import { BooksModule } from './books/books.module';
 import { EmailModule } from './email/email.module';
-import { PaymentsModule } from './payments/payments.module';
-import { StripeModule } from '@golevelup/nestjs-stripe';
+import { UploadModule } from './upload/upload.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -35,7 +34,6 @@ import { StripeModule } from '@golevelup/nestjs-stripe';
     UsersModule,
     UploadModule,
     EmailModule,
-    PaymentsModule,
   ],
   controllers: [],
   providers: [],

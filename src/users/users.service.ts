@@ -4,13 +4,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { EmailService } from 'src/email/email.service';
 import { CreateUserDto } from './_utils/dto/requests/create-user.dto';
 import { LoginUserDto } from './_utils/dto/requests/login-user.dto';
-import { UsersRepository } from './users.repository';
-import { UsersMapper } from './users.mapper';
-import { UserDocument } from './user.schema';
 import { GetUserDto } from './_utils/dto/responses/get-user.dto';
-import { EmailService } from 'src/email/email.service';
+import { UserDocument } from './user.schema';
+import { UsersMapper } from './users.mapper';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
@@ -20,17 +20,13 @@ export class UsersService {
     private readonly usersMapper: UsersMapper,
   ) {}
 
-  async createUser(
-    createUserDto: CreateUserDto,
-    stripeId?: string,
-  ): Promise<GetUserDto> {
+  async createUser(createUserDto: CreateUserDto): Promise<GetUserDto> {
     const { name, email, password } = createUserDto;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await this.usersRepository.register(
       name,
       email,
       hashedPassword,
-      stripeId,
     );
 
     this.emailService.sendRegistrationConfirmationEmail({
@@ -58,9 +54,5 @@ export class UsersService {
 
   async deleteUser(userId: string) {
     return await this.usersRepository.delete(userId);
-  }
-
-  async addCustomerId(userId: string, stripeId: string) {
-    return await this.usersRepository.findUserByIdAndUpdate(userId, stripeId);
   }
 }

@@ -9,22 +9,15 @@ export class UsersRepository {
 
   findUserById = (id: string | Types.ObjectId) => this.model.findById(id);
 
-  findUserByIdAndUpdate = (userId, stripeId: string) =>
-    this.model.findByIdAndUpdate(userId, { stripeCustomerId: stripeId });
+  findUserByIdAndUpdate = (userId) => this.model.findByIdAndUpdate(userId);
 
   findUserByEmail = (email: string) => this.model.findOne({ email }).exec();
 
-  register = (
-    name: string,
-    email: string,
-    password: string,
-    stripeId: string,
-  ) =>
+  register = (name: string, email: string, password: string) =>
     this.model.create({
       name,
       email,
       password: password,
-      stripeCustomerId: stripeId,
     });
 
   delete = (userId: string) => this.model.findByIdAndDelete(userId).exec();

@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('Login route test', () => {
   it('Unauthorized to login', () => {
     cy.request({
       method: 'POST',
@@ -9,6 +9,7 @@ describe('template spec', () => {
       },
       failOnStatusCode: false,
     }).then((resp) => {
+      expect(resp.status).to.not.be.eq(200 || 201);
       expect(resp.body.error).to.be.eq('Unauthorized');
     });
   });

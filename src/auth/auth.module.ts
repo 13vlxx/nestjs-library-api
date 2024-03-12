@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { UsersModule } from 'src/users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { UsersModule } from 'src/users/users.module';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './jwt/jwt.strategy';
 import { JwtAuthGuard } from './jwt/jwt-auth.guard';
-import { PaymentsModule } from 'src/payments/payments.module';
+import { JwtStrategy } from './jwt/jwt.strategy';
 
 @Module({
   controllers: [AuthController],
@@ -26,7 +25,6 @@ import { PaymentsModule } from 'src/payments/payments.module';
       },
     }),
     UsersModule,
-    PaymentsModule,
   ],
   exports: [],
 })
